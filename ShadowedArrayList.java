@@ -36,4 +36,10 @@ public class ShadowedArrayList<T> {
     size++;
     shadowIndex++;
   }
+
+  public T get(int index) {
+    if (index < 0 || index > size - 1) throw new IndexOutOfBoundsException("Index is out of "
+        + "bounds");
+    return smallArray[index];
+  }
 }
