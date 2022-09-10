@@ -8,6 +8,11 @@ public class ShadowedArrayTester {
   }
 
   public static void testAdd() {
-    shadow = new ShadowedArrayList<Integer>();
+    ShadowedArrayList<Integer> shadow = new ShadowedArrayList<>(1);
+    shadow.add(1);
+    shadow.add(2);
+    shadow.add(3);
+    shadow.add(4);
+    System.out.print(shadow);
   }
 }
