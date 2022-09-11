@@ -51,11 +51,23 @@ public class ShadowedArrayList<T> {
     StringBuilder builder = new StringBuilder();
     builder.append('[');
     for (int i = 0; i < smallArray.length; i++) {
-      builder.append(smallArray[i].toString());
+      if (smallArray[i] == null) builder.append("null");
+      else builder.append(smallArray[i].toString());
       builder.append(", ");
     }
+
+    builder.delete(builder.length() - 2, builder.length());
+    builder.append("]\n[");
+
+    for (int i = 0; i < largeArray.length; i++) {
+      if (largeArray[i] == null) builder.append("null");
+      else builder.append(largeArray[i].toString());
+      builder.append(", ");
+    }
+
     builder.delete(builder.length() - 2, builder.length());
     builder.append(']');
+
     return builder.toString();
   }
 }
