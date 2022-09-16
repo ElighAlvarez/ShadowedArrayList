@@ -1,16 +1,17 @@
 import java.util.ArrayList;
 
 /**
+ * An exploration on worst-case time complexity of adding items to a list.
+ *
  * Stores an unsorted list of items. Utilizes a shadow array to reduce worst-case time complexity
- * of adding an item.
+ * of adding an item to O(1) by avoiding bulk array copies O(n) upon full array.
  *
  * @param <T> The type of item to be stored in this ShadowedArrayList
  */
 public class ShadowedArrayList<T> {
-  ArrayList<Integer> intArray = new ArrayList<>();
 
-  private T[] smallArray;
-  private T[] largeArray;
+  private Object[] smallArray;
+  private Object[] largeArray; // The "shadow" array.
   private int size;
   private int shadowIndex;
 
@@ -19,8 +20,8 @@ public class ShadowedArrayList<T> {
    * @param initialCapacity The initial capacity.
    */
   public ShadowedArrayList(int initialCapacity) {
-    smallArray = (T[])(new Object[initialCapacity]); // Empty array can be safely cast to T
-    largeArray = (T[])(new Object[initialCapacity * 2]); // Empty array can be safely cast to T
+    smallArray = new Object[initialCapacity]; // Empty array can be safely cast to T
+    largeArray = new Object[initialCapacity * 2]; // Empty array can be safely cast to T
   }
 
   /**
@@ -39,7 +40,7 @@ public class ShadowedArrayList<T> {
     // larger array
     if (size == smallArray.length) {
       smallArray = largeArray;
-      largeArray = (T[])(new Object[smallArray.length * 2]); // Empty array can be safely cast to T
+      largeArray = new Object[smallArray.length * 2]; // Empty array can be safely cast to T
       shadowIndex = 0;
     }
 
@@ -88,7 +89,7 @@ public class ShadowedArrayList<T> {
   public T get(int index) {
     if (index < 0 || index > size - 1) throw new IndexOutOfBoundsException("Index is out of "
         + "bounds");
-    return smallArray[index];
+    return (T)smallArray[index];
   }
 
   /**
